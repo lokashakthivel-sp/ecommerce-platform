@@ -19,8 +19,8 @@ pipeline {
         stage('Build & Test') {
             steps {
                 echo 'Building and testing all services...'
-                sh 'java -version'
-                sh 'mvn -v'
+                bat 'java -version'
+                bat 'mvn -v'
                 bat 'mvn clean test'
             }
         }
