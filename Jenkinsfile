@@ -65,7 +65,11 @@ pipeline {
         stage('Deploy with Ansible') {
             steps {
                 echo 'Deploying to Azure VM via Ansible...'
-                bat 'ansible-playbook -i C:/Users/ADMIN/ansible/inventory.ini C:/Users/ADMIN/ansible/site.yml'
+                sshagent(['azure-vm-ssh']) {
+                    bat """
+                        ssh -o StrictHostKeyChecking=no azureuser@98.70.32.231 "ansible-playbook -i ~/ansible/inventory.ini ~/ansible/site.yml"
+                    """
+                }
             }
         }
 
