@@ -63,10 +63,11 @@ pipeline {
         }
 
         stage('Deploy with Ansible') {
+        stage('Deploy with Ansible') {
             steps {
                 echo 'Deploying to Azure VM via Ansible...'
                 bat """
-                    ssh -i C:/Users/ADMIN/.ssh/ecommerce-vm-key.pem -o StrictHostKeyChecking=no azureuser@98.70.32.231 "ansible-playbook -i ~/ansible/inventory.ini ~/ansible/site.yml"
+                    ssh -i C:/ProgramData/Jenkins/.jenkins/.ssh/ecommerce-vm-key.pem -o StrictHostKeyChecking=no azureuser@98.70.32.231 "ansible-playbook -i ~/ansible/inventory.ini ~/ansible/site.yml"
                 """
             }
         }
