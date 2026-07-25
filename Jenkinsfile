@@ -62,6 +62,15 @@ pipeline {
             }
         }
 
+        stage('Deploy with Ansible') {
+            steps {
+                echo 'Triggering Ansible deployment...'
+                bat '''
+                    wsl ansible-playbook -i ~/ansible/inventory.ini ~/ansible/site.yml
+                '''
+            }
+        }
+
     }
 
     post {
