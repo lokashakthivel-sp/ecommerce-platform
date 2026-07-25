@@ -64,10 +64,8 @@ pipeline {
 
         stage('Deploy with Ansible') {
             steps {
-                echo 'Triggering Ansible deployment...'
-                bat '''
-                    wsl ansible-playbook -i ~/ansible/inventory.ini ~/ansible/site.yml
-                '''
+                echo 'Deploying to Azure VM via Ansible...'
+                bat 'ansible-playbook -i C:/Users/ADMIN/ansible/inventory.ini C:/Users/ADMIN/ansible/site.yml'
             }
         }
 
