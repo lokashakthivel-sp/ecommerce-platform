@@ -63,7 +63,6 @@ pipeline {
         }
 
         stage('Deploy with Ansible') {
-        stage('Deploy with Ansible') {
             steps {
                 echo 'Deploying to Azure VM via Ansible...'
                 bat """
