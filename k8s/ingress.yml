@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-service-external
+spec:
+  type: ClusterIP
+  selector:
+    app: catalog-service
+  ports:
+    - port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart-service-external
+spec:
+  type: ClusterIP
+  selector:
+    app: cart-service
+  ports:
+    - port: 8082
+      targetPort: 8082
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service-external
+spec:
+  type: ClusterIP
+  selector:
+    app: order-service
+  ports:
+    - port: 8083
+      targetPort: 8083
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecommerce-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /products
+            pathType: Prefix
+            backend:
+              service:
+                name: catalog-service-external
+                port:
+                  number: 8081
+          - path: /cart
+            pathType: Prefix
+            backend:
+              service:
+                name: cart-service-external
+                port:
+                  number: 8082
+          - path: /orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service-external
+                port:
+                  number: 8083

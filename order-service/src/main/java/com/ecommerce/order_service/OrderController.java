@@ -36,4 +36,9 @@ public class OrderController {
                                               @RequestBody Map<String, String> body) {
         return ResponseEntity.ok(orderService.updateStatus(orderId, body.get("status")));
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("order-service is up");
+    }
 }

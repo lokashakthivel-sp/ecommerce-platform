@@ -45,4 +45,9 @@ public class CartController {
     public ResponseEntity<Map<String, Double>> getTotal(@PathVariable String userId) {
         return ResponseEntity.ok(Map.of("total", cartService.getCartTotal(userId)));
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("cart-service is up");
+    }
 }
