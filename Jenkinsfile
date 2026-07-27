@@ -62,14 +62,23 @@ pipeline {
             }
         }
 
-        stage('Deploy with Ansible') {
-            steps {
-                echo 'Deploying to Azure VM via Ansible...'
-                bat """
-                    ssh -i C:/ProgramData/Jenkins/.jenkins/.ssh/ecommerce-vm-key.pem -o StrictHostKeyChecking=no azureuser@98.70.32.231 "ansible-playbook -i ~/ansible/inventory.ini ~/ansible/site.yml"
-                """
-            }
-        }
+// wont work in Jenkins coz it runs in a windows as a local system, so we manually deploy to aks
+//         stage('Deploy to AKS') {
+//             steps {
+//                 echo 'Deploying to AKS...'
+//                 withCredentials([azureServicePrincipal('azure-credentials')]) {
+//                     bat '''
+//                         az login --service-principal -u %AZURE_CLIENT_ID% -p %AZURE_CLIENT_SECRET% --tenant %AZURE_TENANT_ID%
+//                         az aks get-credentials --resource-group ecommerce-rg --name ecommerce-aks --overwrite-existing
+//                         kubectl rollout restart deployment catalog-service cart-service order-service
+//                     '''
+//                 }
+//             }
+//         }
+// kubectl rollout restart deployment catalog-service cart-service order-service
+// kubectl rollout status deployment catalog-service
+// kubectl rollout status deployment cart-service
+// kubectl rollout status deployment order-service
 
     }
 
