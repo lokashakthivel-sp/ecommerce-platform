@@ -25,6 +25,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: ecommerce-config
+          env:
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
           readinessProbe:
             httpGet:
               path: /products
