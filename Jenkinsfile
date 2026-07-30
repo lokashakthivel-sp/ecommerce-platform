@@ -61,12 +61,11 @@ pipeline {
             }
         }
 
+    }
 // kubectl rollout restart deployment catalog-service cart-service order-service
 // kubectl rollout status deployment catalog-service
 // kubectl rollout status deployment cart-service
 // kubectl rollout status deployment order-service
-
-    }
 
     post {
         success {
