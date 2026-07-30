@@ -3,6 +3,7 @@ package com.ecommerce.catalog_service;
 import com.ecommerce.catalog_service.Product;
 import com.ecommerce.catalog_service.ProductController;
 import com.ecommerce.catalog_service.ProductService;
+import com.ecommerce.catalog_service.utils.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ class ProductControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockitoBean
+    private JwtUtil jwtUtil;
 
     @MockitoBean
     private ProductService productService;
