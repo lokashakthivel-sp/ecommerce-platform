@@ -49,23 +49,19 @@ pipeline {
                 echo 'Pushing images to Azure Container Registry...'
                 script {
                     docker.withRegistry("https://${ACR_REGISTRY}", ACR_CREDENTIALS) {
-                    docker.image("${ACR_REGISTRY}/catalog-service:${BUILD_TAG}").push()
-                    docker.image("${ACR_REGISTRY}/catalog-service:${BUILD_TAG}").push('latest')
-                    docker.image("${ACR_REGISTRY}/cart-service:${BUILD_TAG}").push()
-                    docker.image("${ACR_REGISTRY}/cart-service:${BUILD_TAG}").push('latest')
-                    docker.image("${ACR_REGISTRY}/order-service:${BUILD_TAG}").push()
-                    docker.image("${ACR_REGISTRY}/order-service:${BUILD_TAG}").push('latest')
-                    docker.image("${ACR_REGISTRY}/user-service:${BUILD_TAG}").push()
-                    docker.image("${ACR_REGISTRY}/user-service:${BUILD_TAG}").push('latest')
+                        docker.image("${ACR_REGISTRY}/catalog-service:${BUILD_TAG}").push()
+                        docker.image("${ACR_REGISTRY}/catalog-service:${BUILD_TAG}").push('latest')
+                        docker.image("${ACR_REGISTRY}/cart-service:${BUILD_TAG}").push()
+                        docker.image("${ACR_REGISTRY}/cart-service:${BUILD_TAG}").push('latest')
+                        docker.image("${ACR_REGISTRY}/order-service:${BUILD_TAG}").push()
+                        docker.image("${ACR_REGISTRY}/order-service:${BUILD_TAG}").push('latest')
+                        docker.image("${ACR_REGISTRY}/user-service:${BUILD_TAG}").push()
+                        docker.image("${ACR_REGISTRY}/user-service:${BUILD_TAG}").push('latest')
+                    }
                 }
             }
         }
-
     }
-// kubectl rollout restart deployment catalog-service cart-service order-service
-// kubectl rollout status deployment catalog-service
-// kubectl rollout status deployment cart-service
-// kubectl rollout status deployment order-service
 
     post {
         success {
