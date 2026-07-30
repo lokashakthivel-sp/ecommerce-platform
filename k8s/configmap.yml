@@ -5,4 +5,5 @@ metadata:
 data:
   SPRING_PROFILES_ACTIVE: "docker"
   CATALOG_SERVICE_URL: "http://catalog-service:8081"
-  APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=8442d4fe-bd6d-4d06-afd4-f7dfef0a2697"
+  JWT_SECRET: "ecommerce-super-secret-key-must-be-at-least-256-bits-long-for-security"
+  JWT_EXPIRATION: "86400000"

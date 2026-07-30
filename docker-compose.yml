@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-
   postgres:
     image: postgres:16-alpine
     container_name: postgres
@@ -21,6 +20,23 @@ services:
       timeout: 5s
       retries: 5
 
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    container_name: user-service
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: ecommerce-super-secret-key-must-be-at-least-256-bits-long-for-security
+      JWT_EXPIRATION: 86400000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+
   catalog-service:
     build:
       context: .
@@ -30,6 +46,8 @@ services:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: ecommerce-super-secret-key-must-be-at-least-256-bits-long-for-security
+      JWT_EXPIRATION: 86400000
     depends_on:
       postgres:
         condition: service_healthy
@@ -45,6 +63,8 @@ services:
       - "8082:8082"
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: ecommerce-super-secret-key-must-be-at-least-256-bits-long-for-security
+      JWT_EXPIRATION: 86400000
     depends_on:
       postgres:
         condition: service_healthy
@@ -61,6 +81,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       CATALOG_SERVICE_URL: http://catalog-service:8081
+      JWT_SECRET: ecommerce-super-secret-key-must-be-at-least-256-bits-long-for-security
+      JWT_EXPIRATION: 86400000
     depends_on:
       postgres:
         condition: service_healthy
