@@ -24,7 +24,9 @@ public class Order {
     private Double totalAmount;
     private LocalDateTime createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE},
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<OrderItem> items;
 

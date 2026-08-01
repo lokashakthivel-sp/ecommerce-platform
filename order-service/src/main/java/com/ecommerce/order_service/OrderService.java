@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -18,9 +17,12 @@ public class OrderService {
     @Value("${catalog.service.url}")
     private String catalogServiceUrl;
 
+    @Value("${cart.service.url}")
+    private String cartServiceUrl;
+
     public Order placeOrder(Order order) {
-        // Validate each product exists in catalog-service
         for (OrderItem item : order.getItems()) {
+            item.setId(null);
             try {
                 restTemplate.getForObject(
                         catalogServiceUrl + "/products/" + item.getProductId(),
@@ -31,14 +33,23 @@ public class OrderService {
             }
         }
 
-        // Calculate total
         double total = order.getItems().stream()
                 .mapToDouble(i -> i.getPrice() * i.getQuantity())
                 .sum();
         order.setTotalAmount(total);
         order.setStatus("CONFIRMED");
 
-        return orderRepository.save(order);
+        Order saved = orderRepository.save(order);
+
+        // Clear cart after successful order
+        try {
+            restTemplate.delete(cartServiceUrl + "/cart/" + order.getUserId());
+        } catch (Exception e) {
+            // Log but don't fail the order if cart clear fails
+            System.out.println("Warning: Could not clear cart for user " + order.getUserId());
+        }
+
+        return saved;
     }
 
     public Order getOrder(Long orderId) {
