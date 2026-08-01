@@ -40,6 +40,7 @@ pipeline {
                     docker.build("${ACR_REGISTRY}/cart-service:${BUILD_TAG}", "-f cart-service/Dockerfile .")
                     docker.build("${ACR_REGISTRY}/order-service:${BUILD_TAG}", "-f order-service/Dockerfile .")
                     docker.build("${ACR_REGISTRY}/user-service:${BUILD_TAG}", "-f user-service/Dockerfile .")
+                    docker.build("${ACR_REGISTRY}/frontend:${BUILD_TAG}", "-f frontend/Dockerfile frontend/")
                 }
             }
         }
@@ -57,6 +58,8 @@ pipeline {
                         docker.image("${ACR_REGISTRY}/order-service:${BUILD_TAG}").push('latest')
                         docker.image("${ACR_REGISTRY}/user-service:${BUILD_TAG}").push()
                         docker.image("${ACR_REGISTRY}/user-service:${BUILD_TAG}").push('latest')
+                        docker.image("${ACR_REGISTRY}/frontend:${BUILD_TAG}").push()
+                        docker.image("${ACR_REGISTRY}/frontend:${BUILD_TAG}").push('latest')
                     }
                 }
             }
